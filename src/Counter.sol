@@ -1,26 +1,27 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-// змінну стану для зберігання числа
-// increment() — збільшує на 1
-// decrement() — зменшує на 1
-// reset() — скидає в 0
-
+/// @title Counter
+/// @notice A simple counter contract with increment, decrement and reset
+/// @dev Reverts on underflow due to Solidity 0.8+ built-in checks
 contract Counter {
-    uint public counter;
+    /// @notice Current value of the counter
+    uint256 public counter;
 
-    function increment () external {
+    /// @notice Increases the counter by 1
+    function increment() external {
         counter += 1;
     }
 
+    /// @notice Decreases the counter by 1
+    /// @dev Reverts if counter is already 0
     function decrement() external {
         require(counter > 0, "Counter: already zero");
         counter -= 1;
     }
 
+    /// @notice Resets the counter to 0
     function reset() external {
         counter = 0;
     }
-
-
 }
