@@ -28,7 +28,7 @@ contract PiggyBank {
     function withdraw(uint _amount) public {
         require(msg.sender == owner, "Not owner");
         uint val = balances[msg.sender];
-        require(_amount <= val);
+        require(_amount <= val, "Insufficient balance");
         balances[msg.sender] -= _amount;
         (bool ok,) = payable(msg.sender).call{value: _amount}("");
         require(ok, "Transfer failed");
