@@ -28,4 +28,24 @@ contract MyTokenTest is Test {
         assertEq(token.balanceOf(alice), 100 * 10**18);
         assertEq(token.balanceOf(owner), 900 * 10**18);
     }
+
+    function test_MintOnlyOwner() public {
+    vm.prank(alice);
+    vm.expectRevert();
+    token.mint(alice, 100 * 10**18);
+    }
+
+    function test_TransferInsufficientBalance() public {
+        vm.prank(alice);
+        vm.expectRevert();
+        token.transfer(owner, 1 * 10**18);  // скільки у alice? скільки вона намагається відправити?
+    }
+
+    function test_ApproveAndTransferFrom() public {
+        token.approve(alice, 100 * 10**18);
+        vm.prank(alice);
+        token.transferFrom(owner, alice, 100 * 10**18);  // скільки переказуємо?
+        assertEq(token.balanceOf(alice), 100 * 10**18);
+        assertEq(token.balanceOf(owner), 900 * 10**18);
+    }
 }
